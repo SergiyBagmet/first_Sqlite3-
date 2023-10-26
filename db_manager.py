@@ -2,6 +2,8 @@ from contextlib import contextmanager
 import sqlite3
 from sqlite3 import Error, Connection
 from pathlib import Path
+import typing as t
+
 
 class DatabaseManager:
     def __init__(self, db_file: str | Path):
@@ -15,14 +17,10 @@ class DatabaseManager:
     @db_file.setter
     def db_file(self, value: str | Path):
         if isinstance(value, str): value = Path(value)
-        if not value.is_file():
-            self._create_database(value)
+        if not value.exists() or not value.is_file():
+            conn = sqlite3.connect(value)
+            conn.close()     
         self._db_file = value
-    
-    def _create_database(self, value=None):
-        """ create a database, if not exists """
-        conn = sqlite3.connect(self.db_file or value)
-        conn.close()
     
     @contextmanager
     def create_connection(self):
@@ -41,19 +39,19 @@ class CRUDManager:
     def __init__(self, database_manager: DatabaseManager):
         self.db_manager = database_manager
 
-    def create_table(self, create_table_sql):
+    def create(self, create_sql, param=()):
         with self.db_manager.create_connection() as conn:
             try:
                 cursor = conn.cursor()
-                cursor.execute(create_table_sql)
+                cursor.execute(create_sql, param)
             except Error as e:
                 print(e)
 
-    def create_tables(self, create_tables_sql):
+    def create_many(self, sql, param: t.Iterable[t.Any]=()):
         with self.db_manager.create_connection() as conn:
             try:
                 cursor = conn.cursor()
-                cursor.executemany(create_tables_sql)
+                cursor.executemany(sql, param)
             except Error as e:
                 print(e)
 
@@ -66,7 +64,7 @@ class CRUDManager:
                 cursor.executescript(sql_script)
             except Error as e:
                 print(e)
-                
+    
 if __name__ == "__main__":
     pass
     # database = './university.db'
