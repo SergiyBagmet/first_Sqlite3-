@@ -5,5 +5,5 @@ LEFT JOIN
 	students as s on g.student_id = s.id, 
 	subjects as sub on g.subject_id = sub.id,
 	teachers as t on t.id = sub.teacher_id
-WHERE s.id == 1 and t.id == 1
+WHERE s.id == ? and t.id == ?
 GROUP BY sub.name;

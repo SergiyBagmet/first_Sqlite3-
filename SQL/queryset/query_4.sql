@@ -1,3 +1,3 @@
 --4.Знайти середній бал на потоці (по всій таблиці оцінок).
-SELECT ROUND(AVG(g.grade), 2) as avg_g
+SELECT ROUND(AVG(g.grade), 2) as average
 FROM grades as g;
