@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 import sqlite3
-from sqlite3 import Error, Connection
+from sqlite3 import Error
 from pathlib import Path
 import typing as t
 
@@ -67,7 +67,4 @@ class CRUDManager:
     
 if __name__ == "__main__":
     pass
-    # database = './university.db'
-    # dbm = DatabaseManager(database)
-    # crud = CRUDManager(dbm)
-    # crud.execute_sql_script("./SQL/create_tabels.sql")         
+       

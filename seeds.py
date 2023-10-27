@@ -1,7 +1,5 @@
-from datetime import datetime, date, timedelta
-from dateutil.tz import tzlocal
-from random import randint, uniform
-import sqlite3
+from datetime import datetime
+from random import randint
 
 from faker import Faker
 
@@ -74,8 +72,7 @@ class DataSeeder:
             if grade_counters[student_id] < 20:
                 grades.append((subject_id, student_id, grade, date))
                 grade_counters[student_id] += 1
-             
-            
+                   
         self.crud.create_many(sql, grades)
 
 if __name__ == "__main__":
