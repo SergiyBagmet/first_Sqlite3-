@@ -18,8 +18,8 @@ def main():
     database = 'university.db'
     dbm = DatabaseManager(database)
     crud_manager = CRUDManager(dbm)
-    params = [(), (1,), (1,), (), (1,), (1,), (1, 1), (1,), (24,), (1,1)]
-    for i in range(10):
+    params = [(), (1,), (1,), (), (1,), (1,), (1, 1), (1,), (24,), (1,1), (1,1), (1,1)]
+    for i in range(12):
         sql_script=f"./SQL/queryset/query_{i+1}.sql"
         print(show_query(crud_manager, sql_script=sql_script, param=params[i]))
         input("press any to next >>>")
